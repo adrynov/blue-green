@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blue
+  labels:
+    app: blue-green
+    colour: blue
+spec:
+  containers:
+    - name: blue
+      image: blue-green:blue
+      imagePullPolicy: Never
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      env:
+        - name: COLOUR
+          value: "blue"

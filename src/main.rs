@@ -1,5 +1,3 @@
-/* Tested at 1000rps: p50 3ms, p99 33ms; 40% of a 2.2GHz AMD Turion(tm) II Neo N54L */
-
 use signal_hook::{consts::signal::*, iterator::Signals};
 use std::env;
 use std::error::Error;
@@ -11,20 +9,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut signals = Signals::new(&sigs)?;
 
     thread::spawn(move || {
-        for s in signals.forever() {
+        if let Some(s) = signals.into_iter().next() {
             println!("Caught signal {:?}; quitting", s);
             std::process::exit(0);
         }
     });
 
-    // TODO expose color on prom
-    // TODO expose error rate on prom
-    // TODO all this error rate - this should be an output option for badpod
-    // TODO take error rate on cmdline
-    // TODO do actually try Serde and see what the resulting binary size is with all the LTO turned on
-
     let start = chrono::Utc::now();
+
     let colour = env::var("COLOUR").expect("Please supply a colour");
+    println!("Starting with colour {}", colour);
+
     let html = format!(
         "\
 <html>
@@ -37,8 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 <html>",
         c = colour
     );
-    let json = format!(r#"{{ "colour": "{c}" }}"#, c = colour); // Not taking on the heft of serde for this
-                                                                // TODO try it with LTO and see how much bigger it really gets
+    let json = format!(r#"{{ "colour": "{c}" }}"#, c = colour);
 
     let server = tiny_http::Server::http("0.0.0.0:8080").expect("Can't start server"); // TODO add logging library and do JSON / text
     println!("[{}] Listening on {:?}", colour, server.server_addr());

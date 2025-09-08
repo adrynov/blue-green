@@ -1,15 +1,15 @@
 [package]
 name = "blue-green"
 version = "0.1.0"
-authors = ["Matt Turner <matturner@gmail.com>"]
-edition = "2021"
+authors = ["Matt Turner <matturner@gmail.com>", "Andrei Drynov <adrynov@gmail.com"]
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 tiny_http = "^0.12.0"
-chrono = { version = "*", default-features=false, features=["now"] } # Dependancy of tiny_http already
-signal-hook = { version = "0.3.4", default-features=false, features=["iterator"] }
+chrono = { version = "0.4.41", default-features=false, features=["now"] }
+signal-hook = { version = "0.3.18", default-features=false, features=["iterator"] }
 
 [profile.release]
 strip = true
