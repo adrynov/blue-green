@@ -17,7 +17,7 @@ Install just tool with `cargo install just`.
 
 ## Build and Run
 
-Build Docker images with `just build`.
+Build Docker images with `/snap/bin/just build`.
 
 Start minikube with `minikube start`.
 

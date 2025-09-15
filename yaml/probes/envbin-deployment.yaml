@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envbin
+  labels:
+    app: envbin
+spec:
+  selector:
+    matchLabels:
+      app: envbin
+  template:
+    metadata:
+      labels:
+        app: envbin
+    spec:
+      containers:
+        - name: envbin
+          image: mtinside/envbin:latest
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

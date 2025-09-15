@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: colours
+data:
+  colour: "pink"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pink
+spec:
+  containers:
+    - name: pink
+      image: blue-green:blue
+      imagePullPolicy: Never
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      env:
+        - name: COLOUR
+          valueFrom:
+            configMapKeyRef:
+              name: colours
+              key: colour
+  restartPolicy: Always

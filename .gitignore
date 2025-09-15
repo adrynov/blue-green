@@ -3,5 +3,6 @@
 # Cargo.lock
 Cargo.toml
 
+exercises/
 
-samples/
+*Zone.Identifier

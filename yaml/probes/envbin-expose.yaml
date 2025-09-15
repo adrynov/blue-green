@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: envbin
+spec:
+  selector:
+    app: envbin
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: envbin
+spec:
+  rules:
+    - host: envbin.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: envbin
+                port:
+                  number: 80
